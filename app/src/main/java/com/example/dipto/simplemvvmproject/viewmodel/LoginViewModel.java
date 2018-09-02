@@ -1,5 +1,7 @@
 package com.example.dipto.simplemvvmproject.viewmodel;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.dipto.simplemvvmproject.model.ResponseRoot;
@@ -34,5 +36,27 @@ public class LoginViewModel extends ViewModel{
             }
         });
         return responseRoot ;
+    }
+
+    public LiveData<ResponseRoot> getLiveUserLogInfo(String phone, String password){
+
+        final MutableLiveData<ResponseRoot> mutableLiveData = new MutableLiveData<>() ;
+        ApiService apiService = ApiClient.getApiService() ;
+        Call<ResponseRoot> call = apiService.getUserLoginInfo(authentication, phone, password);
+
+        call.enqueue(new Callback<ResponseRoot>() {
+            @Override
+            public void onResponse(Call<ResponseRoot> call, Response<ResponseRoot> response) {
+                ResponseRoot responseRoot = response.body() ;
+                mutableLiveData.setValue(responseRoot);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRoot> call, Throwable t) {
+
+            }
+        });
+
+        return mutableLiveData ;
     }
 }
