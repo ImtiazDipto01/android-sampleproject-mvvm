@@ -1,9 +1,7 @@
 package com.example.dipto.simplemvvmproject.model;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("com.robohorse.robopojogenerator")
 public class Users{
 
 	@SerializedName("address")

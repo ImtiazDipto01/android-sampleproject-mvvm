@@ -3,6 +3,7 @@ package com.example.dipto.simplemvvmproject.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import com.example.dipto.simplemvvmproject.model.ResponseRoot;
 import com.example.dipto.simplemvvmproject.retrofit.ApiClient;
@@ -49,14 +50,24 @@ public class LoginViewModel extends ViewModel{
         call.enqueue(new Callback<ResponseRoot>() {
             @Override
             public void onResponse(Call<ResponseRoot> call, Response<ResponseRoot> response) {
-                responseRoot = response.body() ;
-                mutableLiveData.setValue(responseRoot);
+                if(response.isSuccessful()){
+                    Log.d("ResponseRoot", String.valueOf(response.body()));
+                    responseRoot = response.body() ;
+                    mutableLiveData.setValue(responseRoot);
+                }
+                else{
+                    Log.d("ResponseRoot", "response not sucessfull");
+                    responseRoot = null ;
+                    mutableLiveData.setValue(responseRoot);
+                }
+
             }
 
             @Override
             public void onFailure(Call<ResponseRoot> call, Throwable t) {
                 responseRoot = null ;
                 mutableLiveData.setValue(responseRoot);
+                Log.d("ResponseRoot", String.valueOf(t));
             }
         });
 
