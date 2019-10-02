@@ -60,9 +60,7 @@ public class LoginViewModel extends ViewModel{
                     responseRoot = null ;
                     mutableLiveData.setValue(responseRoot);
                 }
-
             }
-
             @Override
             public void onFailure(Call<ResponseRoot> call, Throwable t) {
                 responseRoot = null ;
